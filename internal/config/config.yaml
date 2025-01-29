@@ -1,0 +1,3 @@
+api:
+  levy_data: "https://data.ny.gov/resource/iq85-sdzs.json"
+  equalization_data: "https://data.ny.gov/resource/e6pv-77bh.json"
