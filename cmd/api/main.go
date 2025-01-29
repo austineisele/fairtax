@@ -3,29 +3,21 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/austineisele/fairtax/internal/config"
+	"github.com/austineisele/fairtax/internal/domain"
 	"io"
 	"log"
 	"net/http"
 	"os"
 )
 
-
 type Response struct {
-	Name    string    `json:"name"`
-	Pokeman []Pokemon `json:"pokemon_entries"`
-}
-
-type Pokemon struct {
-	EntryNo int            `json:"entry_number"`
-	Species PokemonSpecies `json:"pokemon_species"`
-}
-
-type PokemonSpecies struct {
-	Name string `json:"name"`
+	LevyData []domain.LevyData `json:"levy_entries"`
 }
 
 func main() {
-	response, err := http.Get("http://pokeapi.co/api/v2/pokedex/kanto/")
+	url := config.GetApiUrl("RateLevy")
+	response, err := http.Get(url)
 
 	if err != nil {
 		fmt.Print(err.Error())
@@ -36,14 +28,17 @@ func main() {
 		log.Fatal(err)
 	}
 
-  var responseObject Response
-  json.Unmarshal(responseData, &responseObject)
+	var responseObject Response
+	json.Unmarshal(responseData, &responseObject)
 
-  fmt.Println(responseObject.Name)
-  fmt.Println(len(responseObject.Pokeman))
+	fmt.Println(len(responseObject.LevyData))
 
-  for _, pokemon := range responseObject.Pokeman {
-    fmt.Println(pokemon.Species.Name)
-  }
+  i := 1
+	for _, levy_data := range responseObject.LevyData {
+    fmt.Printf("Entry %d", i)
+		fmt.Printf("School Name: %s\n", levy_data.SchoolName)
+    fmt.Printf("Municipality: %s\n", levy_data.Municipality)
+    fmt.Printf("Municipality: %d\n", levy_data.RollYear)
+	}
 
 }
