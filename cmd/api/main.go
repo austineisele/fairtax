@@ -3,7 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/austineisele/fairtax/internal/config"
+	"github.com/austineisele/fairtax/config"
 	"github.com/austineisele/fairtax/internal/domain"
 	"io"
 	"log"
